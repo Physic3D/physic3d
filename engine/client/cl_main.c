@@ -15,17 +15,17 @@ GNU General Public License for more details.
 
 #ifndef XASH_DEDICATED
 
-#include "cl_tent.h"
-#include "client.h"
 #include "common.h"
+#include "client.h"
+#include "net_encode.h"
+#include "cl_tent.h"
 #include "gl_local.h"
 #include "input.h"
+#include "touch.h"
 #include "joyinput.h"
 #include "kbutton.h"
-#include "library.h"
-#include "net_encode.h"
-#include "touch.h"
 #include "vgui_draw.h"
+#include "library.h"
 #include <studio.h>
 
 #define MAX_TOTAL_CMDS 16

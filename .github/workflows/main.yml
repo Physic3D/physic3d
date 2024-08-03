@@ -1,0 +1,35 @@
+name: Build for linux
+
+on:
+  workflow_dispatch:
+
+jobs:
+  linux:
+   name: Setup
+   runs-on: ubuntu-latest
+   steps:
+   - name: Checkout sources
+     uses: actions/checkout@v3
+     with:
+          fetch-depth: 0
+          submodules: recursive
+   - uses: actions/checkout@v3
+   - uses: actions/setup-java@v3
+     with:
+      distribution: 'zulu' # See 'Supported distributions' for available options
+      java-version: '8'
+   - run: | 
+           sudo dpkg --add-architecture i386
+           export CFLAGS="-m32"
+           export CXXFLAGS="-m32"
+           sudo apt-get update
+           sudo apt install build-essential cmake make gcc g++ gcc-multilib g++-multilib libfontconfig1-dev libfreetype6-dev libstdc++6 libunwind-dev libsdl2-dev libfontconfig1-dev:i386 libfreetype6-dev:i386 libstdc++6:i386 libunwind-dev:i386 libsdl2-dev:i386
+           mkdir build && cd build
+           cmake .. -DXASH_SDL=yes -DXASH_VGUI=yes -DCMAKE_CXX_FLAGS=-m32 -DCMAKE_C_FLAGS=-m32 -DCMAKE_EXE_LINKER_FLAGS=-m32 -DHL_SDK_DIR=../hlsdk
+           make -j8
+     continue-on-error: true
+   - name: Upload artifacts
+     uses: actions/upload-artifact@v3
+     with:
+          name: compiled
+          path: build/

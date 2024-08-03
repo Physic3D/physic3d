@@ -1108,9 +1108,7 @@ extern convar_t *xhair_gap;
 extern convar_t *xhair_pad;
 extern convar_t *xhair_size;
 extern convar_t *xhair_t;
-extern convar_t *cl_seebehindwall;
 extern convar_t *xhair_thick;
-extern convar_t *cl_nosmoke;
 #define MAX( a, b ) ( ( ( a ) > ( b ) ) ? ( a ) : ( b ) )
 #define MIN( a, b ) ( ( ( a ) < ( b ) ) ? ( a ) : ( b ) )
 qboolean IsAliveEntity( cl_entity_t *Entity );

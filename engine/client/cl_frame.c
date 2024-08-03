@@ -573,14 +573,6 @@ qboolean CL_AddVisibleEntity( cl_entity_t *ent, int entityType )
 
 	}
 
-	if ( cl_nosmoke->value != 0 )
-	{
-		if ( ( Q_strstr( ent->model->name, "gas_puff_01" ) || Q_strstr( ent->model->name, "fast_wallpuff" ) ) )//hey tesla ibrahim yýlmaz çýrak þarkýsýný aç da dinleyim kardeþim tesla
-		{
-			return;// im sorry i dont know your language brother
-		}
-	}
-
 	if( entityType == ET_TEMPENTITY )
 	{
 		// copy actual origin and angles back to let StudioModelRenderer

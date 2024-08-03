@@ -2970,18 +2970,6 @@ static void GAME_EXPORT R_StudioSetupRenderer( int rendermode )
 	// was done before, in R_DrawViewModel
 	if ( g_iBackFaceCull )
 		GL_FrontFace( !glState.frontFace );
-
-	cl_entity_t *ent = RI.currententity;
-	if ( Cvar_VariableInteger( "cl_seebehindwall" ) && ent->player )
-	{
-		pglEnable( GL_TRIANGLES );
-		pglDepthRange( 0.0, 0.5 );
-	}
-	else
-	{
-		pglDisable( GL_TRIANGLES );
-		pglDepthRange( gldepthmin, gldepthmax );
-	}
 }
 
 /*
@@ -3003,13 +2991,6 @@ static void GAME_EXPORT R_StudioRestoreRenderer( void )
 	// was done before, in R_DrawViewModel
 	if( g_iBackFaceCull )
 		GL_FrontFace( !glState.frontFace );
-
-	if ( Cvar_VariableInteger( "cl_seebehindwall" ) && RI.currententity->player )
-	{
-		pglDisable( GL_TRIANGLES );
-		pglDepthRange( gldepthmin, gldepthmax );
-
-	}
 
 	g_iBackFaceCull = false;
 	m_fDoRemap = false;

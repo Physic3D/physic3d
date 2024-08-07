@@ -4510,6 +4510,7 @@ qboolean CL_LoadProgs( const char *name )
 	// NOTE: some usermessages are handled into the engine
 	pfnHookUserMsg( "ScreenFade", CL_ParseScreenFade );
 	pfnHookUserMsg( "ScreenShake", CL_ParseScreenShake );
+	pfnHookUserMsg( "Fog", CL_ParseFog );
 
 	// initialize game
 	clgame.dllFuncs.pfnInit();

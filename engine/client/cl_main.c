@@ -125,6 +125,9 @@ client_t cl;
 client_static_t cls;
 clgame_static_t clgame;
 
+float fog_rgb[3];
+float fog_den;
+
 //======================================================================
 qboolean CL_Active( void )
 {

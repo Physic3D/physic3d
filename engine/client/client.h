@@ -853,6 +853,7 @@ extern rgba_t g_color_table[8];
 //
 void CL_ParseServerMessage( sizebuf_t *msg );
 void CL_ParseTempEntity( sizebuf_t *msg );
+int CL_ParseFog( const char *pszName, int iSize, void *pbuf );
 qboolean CL_DispatchUserMessage( const char *pszName, int iSize, void *pbuf );
 int CL_ParseScreenShake( const char *pszName, int iSize, void *pbuf );
 int CL_ParseScreenFade( const char *pszName, int iSize, void *pbuf );
@@ -1116,6 +1117,8 @@ qboolean m_iThirdPerson;
 extern convar_t *cl_thirdperson_right;
 extern convar_t *cl_thirdperson_up;
 extern convar_t *cl_thirdperson_forward;
+extern float fog_rgb[3];
+extern float fog_den;
 
 
 #endif//CLIENT_H

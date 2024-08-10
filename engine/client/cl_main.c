@@ -978,6 +978,28 @@ void CL_CheckForResend( void )
 
 /*
 ================
+CL_Retry_f
+
+================
+*/
+void CL_Retry_f( void )
+{
+	if ( cls.servername[0] )
+	{
+		if ( cls.state >= ca_connected )
+		{
+			CL_Disconnect( );
+		}
+
+		cls.connect_time = MAX_HEARTBEAT; // fire immediately
+
+		cls.demonum = cls.movienum = -1; // not in the demo loop now
+		cls.state                  = ca_connecting;
+	}
+}
+
+/*
+================
 CL_Connect_f
 
 ================
@@ -1453,10 +1475,9 @@ void CL_Reconnect_f( void )
 		if ( cls.state >= ca_connected )
 		{
 			CL_Disconnect( );
-			cls.connect_time = host.realtime - 1.5;
 		}
-		else
-			cls.connect_time = MAX_HEARTBEAT; // fire immediately
+		
+		cls.connect_time = MAX_HEARTBEAT; // fire immediately
 
 		cls.demonum = cls.movienum = -1; // not in the demo loop now
 		cls.state                  = ca_connecting;
@@ -2646,6 +2667,7 @@ void CL_InitLocal( void )
 
 	Cmd_AddRestrictedCommand( "connect", CL_Connect_f, "connect to a server by hostname" );
 	Cmd_AddRestrictedCommand( "reconnect", CL_Reconnect_f, "reconnect to current level" );
+	Cmd_AddRestrictedCommand( "retry", CL_Retry_f, "retry connect to latest connected server" );
 
 	Cmd_AddRestrictedCommand( "rcon", CL_Rcon_f, "sends a command to the server console (rcon_password required)" );
 

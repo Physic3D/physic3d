@@ -3511,6 +3511,8 @@ void SV_TSourceEngineQuery( netadr_t from )
 	BF_WriteByte  ( &buf, 'w' );
 #elif defined(__APPLE__)
 	BF_WriteByte  ( &buf, 'm' );
+#elif defined(__ANDROID__)
+	BF_WriteByte  ( &buf, 'a' );
 #else
 	BF_WriteByte  ( &buf, 'l' );
 #endif

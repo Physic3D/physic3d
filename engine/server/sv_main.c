@@ -992,7 +992,7 @@ void SV_Init( void )
 	sv_fullupdate_penalty_multiplier = Cvar_Get( "sv_fullupdate_penalty_multiplier", "2", CVAR_ARCHIVE, "penalty time multiplier" );
 	sv_fullupdate_penalty_time = Cvar_Get( "sv_fullupdate_penalty_time", "1", CVAR_ARCHIVE, "inital penalty time" );
 
-	sv_master_response_timeout = Cvar_Get( "sv_master_response_timeout", "4", CVAR_ARCHIVE, "master server heartbeat response timeout in seconds" );
+	sv_master_response_timeout = Cvar_Get( "sv_master_response_timeout", "5", CVAR_ARCHIVE, "master server heartbeat response timeout in seconds" );
 
 	Cmd_AddCommand( "download_resources", SV_DownloadResources_f, "try to download missing resources to server");
 

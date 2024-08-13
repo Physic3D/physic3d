@@ -1610,7 +1610,7 @@ void CL_ParseTSourceQuery( netadr_t from, sizebuf_t *msg )
 	Info_SetValueForKey( s, "bots", va( "%i", bots ), sizeof( s ) );
 	Info_SetValueForKey( s, "gamedir", gamefolder, sizeof( s ) );
 	Info_SetValueForKey( s, "password", havePassword ? "1" : "0", sizeof( s ) );
-	Info_SetValueForKey( s, "dedicated", dedicated ? "1" : "0", sizeof( s ) );
+	Info_SetValueForKey( s, "dedicated", dedicated == 'd' ? "1" : "0", sizeof( s ) );
 	Info_SetValueForKey( s, "os", &os, sizeof( s ) );
 
 	CL_FixupColorStringsForInfoString( s, infostring );

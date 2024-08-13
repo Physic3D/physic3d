@@ -1113,7 +1113,7 @@ extern convar_t *xhair_thick;
 #define MAX( a, b ) ( ( ( a ) > ( b ) ) ? ( a ) : ( b ) )
 #define MIN( a, b ) ( ( ( a ) < ( b ) ) ? ( a ) : ( b ) )
 qboolean IsAliveEntity( cl_entity_t *Entity );
-qboolean m_iThirdPerson;
+extern qboolean m_iThirdPerson;
 extern convar_t *cl_thirdperson_right;
 extern convar_t *cl_thirdperson_up;
 extern convar_t *cl_thirdperson_forward;

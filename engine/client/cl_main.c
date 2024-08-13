@@ -1564,10 +1564,64 @@ void CL_ParseStatusMessage( netadr_t from, sizebuf_t *msg )
 	if ( Info_IsValid( infostring ) )
 	{
 		MsgDev( D_NOTE, "Got info string: %s\n", infostring );
-		UI_AddServerToList( from, infostring );
+		//UI_AddServerToList( from, infostring );
 	}
 	else
 		MsgDev( D_NOTE, "Got bad info string: %s\n", infostring );
+}
+
+/*
+=================
+CL_ParseTSourceQuery
+=================
+*/
+void CL_ParseTSourceQuery( netadr_t from, sizebuf_t *msg )
+{
+	static char infostring[MAX_INFO_STRING + 8];
+	char hostname[64], game[64], map[64], gamefolder[64], os;
+	int count, bots, max, dedicated, havePassword;
+
+	BF_ReadLong( msg );
+	BF_ReadByte( msg );
+	BF_ReadByte( msg );
+	Q_strncpy( hostname, BF_ReadString( msg ), sizeof( hostname ) );
+	Q_strncpy( map, BF_ReadString( msg ), sizeof( map ) );
+	Q_strncpy( gamefolder, BF_ReadString( msg ), sizeof( gamefolder ) );
+	Q_strncpy( game, BF_ReadString( msg ), sizeof( game ) ); // game description (ex. Team Fortress 2, Counter-Strike)
+	BF_ReadShort( msg );
+	count = BF_ReadByte( msg );
+	max = BF_ReadByte( msg );
+	bots = BF_ReadByte( msg );
+	dedicated = BF_ReadByte( msg );
+	os = BF_ReadByte( msg );
+	havePassword = BF_ReadByte( msg );
+	BF_ReadByte( msg );
+
+	char s[MAX_INFO_STRING];
+	s[0] = '\0';
+	Info_SetValueForKey( s, "host", hostname, sizeof( s ) );
+	Info_SetValueForKey( s, "game", game, sizeof( s ) );
+	Info_SetValueForKey( s, "map", map, sizeof( s ) );
+	Info_SetValueForKey( s, "dm", "0", sizeof( s ) );
+	Info_SetValueForKey( s, "team", "0", sizeof( s ) );
+	Info_SetValueForKey( s, "coop", "0", sizeof( s ) );
+	Info_SetValueForKey( s, "numcl", va( "%i", count ), sizeof( s ) );
+	Info_SetValueForKey( s, "maxcl", va( "%i", max ), sizeof( s ) );
+	Info_SetValueForKey( s, "bots", va( "%i", bots ), sizeof( s ) );
+	Info_SetValueForKey( s, "gamedir", gamefolder, sizeof( s ) );
+	Info_SetValueForKey( s, "password", havePassword ? "1" : "0", sizeof( s ) );
+	Info_SetValueForKey( s, "dedicated", dedicated ? "1" : "0", sizeof( s ) );
+	Info_SetValueForKey( s, "os", &os, sizeof( s ) );
+
+	CL_FixupColorStringsForInfoString( s, infostring );
+
+	if ( Info_IsValid( infostring ) )
+	{
+		MsgDev( D_NOTE, "Got game description: %s\n", infostring );
+		UI_AddServerToList( from, infostring );
+	}
+	else
+		MsgDev( D_NOTE, "Got bad game description: %s\n", infostring );
 }
 
 /*
@@ -2002,13 +2056,18 @@ void CL_ConnectionlessPacket( netadr_t from, sizebuf_t *msg )
 
 			NET_Config( true, false ); // allow remote
 
-			Netchan_OutOfBandPrint( NS_CLIENT, servadr, "info %i", PROTOCOL_VERSION );
+			Netchan_OutOfBandPrint( NS_CLIENT, servadr, "TSource" );
 		}
 
 		// execute at next frame preventing relation on fps
 		if ( cls.internetservers_pending )
 			Cbuf_AddText( "menu_resetping\n" );
 		cls.internetservers_pending = false;
+	}
+	else if ( *c == 'I' )
+	{
+		BF_Clear( msg );
+		CL_ParseTSourceQuery( from, msg );
 	}
 	else if ( clgame.dllFuncs.pfnConnectionlessPacket( &from, args, buf, &len ) )
 	{

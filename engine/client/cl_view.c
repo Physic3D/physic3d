@@ -25,7 +25,7 @@ GNU General Public License for more details.
 #include "touch.h" // IN_TouchDraw( )
 #include "joyinput.h" // Joy_DrawOnScreenKeyboard( )
 
-
+qboolean m_iThirdPerson;
 /*
 ===============
 V_SetupRefDef

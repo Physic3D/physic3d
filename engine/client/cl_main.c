@@ -127,6 +127,7 @@ clgame_static_t clgame;
 
 float fog_rgb[3];
 float fog_den;
+qboolean m_iThirdPerson;
 
 //======================================================================
 qboolean CL_Active( void )

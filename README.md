@@ -76,4 +76,4 @@ cl_thirdperson_up
 ```
 
 ### [ For Android ]
-[Click Here To Download]([https://github.com/Physic3D/physic3d-android/releases/download/1/physic3d.apk])
+[Click Here To Download](https://github.com/Physic3D/physic3d-android/releases/download/1/physic3d.apk)

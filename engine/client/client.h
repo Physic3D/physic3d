@@ -623,6 +623,44 @@ typedef struct local_s
 	float flFPS;
 	cl_entity_t *Entity;
 } local_t;
+
+typedef struct player_s
+{
+	int iTeam;
+	int iHealth;
+	int iArmorType;
+	int iShotsFired;
+	int m_iTeamFrags;
+	qboolean bUpdated;
+	qboolean bAlive;
+	qboolean bAliveInScoreTab;
+	qboolean bDucked;
+	qboolean bVisible;
+	qboolean bFriend;
+	qboolean bPriority;
+	qboolean bBehindTheWall;
+	float distance;
+	float dwHistory;
+	vec3_t vAimOrigin;
+	float flFrametime;
+	float flDist;
+	vec3_t vAngle;
+	vec3_t vHitbox[21];
+	vec3_t vBone[53];
+	float fFrametime;
+	cl_entity_t *Entity;
+	vec3_t vAngles;
+	vec3_t vVelocity;
+	vec3_t vOrigin;
+	vec3_t vPrevOrigin;
+	hud_player_info_t Info;
+	qboolean bGotPlayer;
+	qboolean bGotHead;
+
+	vec3_t vPlayerHead;
+} player_t;
+extern player_t g_Player[33];
+
 	// download info
 extern int		downloadcount;
 extern int		downloadfileid;
@@ -854,6 +892,7 @@ extern rgba_t g_color_table[8];
 void CL_ParseServerMessage( sizebuf_t *msg );
 void CL_ParseTempEntity( sizebuf_t *msg );
 int CL_ParseFog( const char *pszName, int iSize, void *pbuf );
+int CL_ParseTeamInfo( const char *pszName, int iSize, void *pbuf );
 qboolean CL_DispatchUserMessage( const char *pszName, int iSize, void *pbuf );
 int CL_ParseScreenShake( const char *pszName, int iSize, void *pbuf );
 int CL_ParseScreenFade( const char *pszName, int iSize, void *pbuf );
@@ -1088,6 +1127,13 @@ extern convar_t *cl_glow_player_renderamt;
 extern convar_t *cl_glow_player_red;
 extern convar_t *cl_glow_player_blue;
 extern convar_t *cl_glow_player_green;
+extern convar_t *cl_glow_player_checkteam;
+extern convar_t *cl_glow_player_terrorist_red;
+extern convar_t *cl_glow_player_terrorist_blue;
+extern convar_t *cl_glow_player_terrorist_green;
+extern convar_t *cl_glow_player_ct_green;
+extern convar_t *cl_glow_player_ct_blue;
+extern convar_t *cl_glow_player_ct_red;
 extern convar_t *cl_glow_viewmodel;
 extern convar_t *cl_glow_viewmodel_red;
 extern convar_t *cl_glow_viewmodel_blue;
@@ -1119,6 +1165,8 @@ extern convar_t *cl_thirdperson_up;
 extern convar_t *cl_thirdperson_forward;
 extern float fog_rgb[3];
 extern float fog_den;
+int iIndex;
+char *szTeam;
 
 
 #endif//CLIENT_H

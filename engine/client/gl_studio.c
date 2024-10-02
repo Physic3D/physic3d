@@ -3674,32 +3674,54 @@ void R_DrawStudioModelInternal( cl_entity_t *e, qboolean follow_entity )
 	} 
 
 	for ( int i = 1; i < 33; i++ )
-        {
+	{
 
-        	cl_entity_t *ent = CL_GetEntityByIndex( i );
+		cl_entity_t *ent = CL_GetEntityByIndex( i );
+		if ( cl_glow_player->value == 1 )
+		{
+			if ( ent->player )
+			{
+				ent->curstate.renderfx = kRenderFxGlowShell;
+				ent->curstate.rendermode = cl_glow_player_rendermode->value;
+				ent->curstate.renderamt  = cl_glow_player_renderamt->value;
+				if ( cl_glow_player_checkteam->value != 0 )
+				{
+					if ( g_Player[i].iTeam == 1 )
+					{
+						ent->curstate.rendercolor.r = cl_glow_player_terrorist_red->value;
+						ent->curstate.rendercolor.g = cl_glow_player_terrorist_green->value;
+						ent->curstate.rendercolor.b = cl_glow_player_terrorist_blue->value;
+					}
+					else if ( g_Player[i].iTeam == 2 )
+					{
 
-                if ( cl_glow_player->value == 1)
-                {
-	                if ( ent->player && ent->index != clgame.viewent.index )
-	                {
-	
-	
-	                ent->curstate.rendermode    = cl_glow_player_rendermode->value;
-	                ent->curstate.renderamt     = cl_glow_player_renderamt->value;
-	                ent->curstate.renderfx      = kRenderFxGlowShell;
-	                ent->curstate.rendercolor.r = cl_glow_player_red->value;
-	                ent->curstate.rendercolor.g = cl_glow_player_green->value;
-	
-	                ent->curstate.rendercolor.b = cl_glow_player_blue->value;
-	                // pglDisable( GL_TEXTURE_2D);
-	
-	            }
-        	}
+						ent->curstate.rendercolor.r = cl_glow_player_ct_red->value;
+						ent->curstate.rendercolor.g = cl_glow_player_ct_green->value;
+						ent->curstate.rendercolor.b = cl_glow_player_ct_blue->value;
+					}
+					else // spec kirwe
+					{
+						ent->curstate.rendercolor.r = 31;	
+						ent->curstate.rendercolor.g = 31; 
+						ent->curstate.rendercolor.b = 31; 
+					}
+				}
+				else
+				{
+
+					ent->curstate.rendercolor.r = cl_glow_player_red->value;
+					ent->curstate.rendercolor.g = cl_glow_player_green->value;
+					ent->curstate.rendercolor.b = cl_glow_player_blue->value;
+				}
+			}
+		}
 		else
 		{
-		    ent->curstate.renderfx   = kRenderNormal;
+			ent->curstate.renderfx = kRenderNormal;
 		}
-    }
+	}
+
+    
 }
 
 /*

@@ -1605,6 +1605,64 @@ int CL_ParseFog( const char *pszName, int iSize, void *pbuf )
 
 	return 1;
 }
+player_t g_Player[33];
+int CL_ParseTeamInfo( const char *pszName, int iSize, void *pbuf )
+{
+	sizebuf_t _msg = { true, pszName, pbuf, 0, iSize * 8 };
+	sizebuf_t *msg = &_msg;
+
+	iIndex = BF_ReadByte( msg );
+	szTeam = BF_ReadString( msg );
+
+	if ( !CL_IsInGame( ) )
+		return 0;
+
+	if ( iIndex > 0 && iIndex <= CL_GetMaxClients( ) )
+	{
+		if ( Q_strstr( szTeam, "TERRORIST" ) )
+		{
+			if ( iIndex == clgame.pmove->player_index + 1 )
+			{
+				g_Local.iTeam = 1;
+				Con_Printf( "^5Bizim Takimimiz Terorist" );
+			}
+			else
+			{
+				g_Player[iIndex].iTeam = 1;
+				Con_Printf( "^2Rakibin Takimi Terorist" );
+			}
+		}
+		else if ( Q_strstr( szTeam, "CT" ) )
+		{
+			if ( iIndex == clgame.pmove->player_index + 1 )
+			{
+				Con_Printf( "^5Bizim Takim ^2CT" );
+				g_Local.iTeam = 2;
+			}
+			else
+			{
+				Con_Printf( "^2Rakibin Takimi CT" );
+				g_Player[iIndex].iTeam = 2;
+			}
+		}
+		else
+		{
+			g_Player[iIndex].iTeam = 0;
+			Con_Printf( "Rakibin Takimi bilinmiyor" );
+			if ( iIndex == clgame.pmove->player_index + 1 )
+			{
+				g_Local.iTeam = 0;
+				Con_Printf( "Takimimiz Bilinmiyor" );
+			}
+		}
+	}
+
+	MsgDev( D_INFO, "CL_ParseTeamInfo: index ve szteam: ^2%d ^5%s\n\n ", iIndex, szTeam );
+
+	return 0;
+}
+
+
 
 /*
 =====================================================================

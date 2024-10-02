@@ -76,6 +76,13 @@ convar_t *cl_glow_player_renderamt;
 convar_t *cl_glow_player_red;
 convar_t *cl_glow_player_blue;
 convar_t *cl_glow_player_green;
+convar_t *cl_glow_player_checkteam;
+convar_t *cl_glow_player_terrorist_red;
+convar_t *cl_glow_player_terrorist_blue;
+convar_t *cl_glow_player_terrorist_green;
+convar_t *cl_glow_player_ct_green;
+convar_t *cl_glow_player_ct_blue;
+convar_t *cl_glow_player_ct_red;
 convar_t *cl_glow_viewmodel;
 convar_t *cl_glow_viewmodel_red;
 convar_t *cl_glow_viewmodel_blue;
@@ -2588,6 +2595,14 @@ void CL_InitLocal( void )
 	cl_glow_player_green      = Cvar_Get( "cl_glow_player_green", "50", CVAR_ARCHIVE, "Player Glowcolor Green" );
 	cl_glow_player_rendermode = Cvar_Get( "cl_glow_player_rendermode", "1", CVAR_ARCHIVE, "Glow Player Rendermode" );
 	cl_glow_player_renderamt  = Cvar_Get( "cl_glow_player_renderamt", "255", CVAR_ARCHIVE, "Glow Player Renderamt" );
+	cl_glow_player_checkteam       = Cvar_Get( "cl_glow_player_checkteam", "0", 1, "checkteam glow player" );
+	cl_glow_player_terrorist_red   = Cvar_Get( "cl_glow_player_terrorist_red", "255", 1, "terrorist red value" );
+	cl_glow_player_terrorist_blue  = Cvar_Get( "cl_glow_player_terrorist_blue", "11", 1, "terrorist blue value" );
+	cl_glow_player_terrorist_green = Cvar_Get( "cl_glow_player_terrorist_green", "11", 1, "terrorist  green value" );
+	cl_glow_player_ct_red          = Cvar_Get( "cl_glow_player_ct_red", "11", 1, "ct red value" );
+	cl_glow_player_ct_blue         = Cvar_Get( "cl_glow_player_ct_blue", "255", 1, "ct blue value" );
+	cl_glow_player_ct_green         = Cvar_Get( "cl_glow_player_ct_green", "11", 1, "ct blue value" );
+
 
 	cl_glow_viewmodel           = Cvar_Get( "cl_glow_viewmodel", "0", 0, "Enable viewmodel glow" );
 	cl_glow_viewmodel_red       = Cvar_Get( "cl_glow_viewmodel_red", "31", 0, "Viewmodel Red Value" );
